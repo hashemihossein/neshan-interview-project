@@ -1,11 +1,12 @@
 const webpack = require("webpack");
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const config = {
   entry: "./index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    filename: "[name].[contenthash].js",
   },
   module: {
     rules: [
@@ -14,7 +15,6 @@ const config = {
         use: "babel-loader",
         exclude: /node_modules/,
       },
-      ,
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],

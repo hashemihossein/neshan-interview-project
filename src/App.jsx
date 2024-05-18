@@ -1,8 +1,11 @@
+import React from "react";
+import "./styles.css";
+
 const App = () => {
   return (
-    <div>
-      <h1>initial</h1>
-    </div>
+    <>
+      <h1 class="initial">initial</h1>
+    </>
   );
 };
 
