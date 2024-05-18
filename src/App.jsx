@@ -1,40 +1,48 @@
 import React, { useRef, useEffect, useState } from "react";
-import "@neshan-maps-platform/mapbox-gl/dist/NeshanMapboxGl.css";
-import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
+
+import * as styles from "./App.module.css";
+import { mapInstance, restClient } from "./instances";
 
 function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
+  const [lng, setLng] = useState(51.389);
+  const [lat, setLat] = useState(35.6892);
   const [zoom, setZoom] = useState(9);
 
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new nmp_mapboxgl.Map({
-      container: mapContainer.current,
-      mapType: nmp_mapboxgl.Map.mapTypes.neshanVector,
-      zoom: 11,
-      pitch: 0,
-      center: [51.389, 35.6892],
-      minZoom: 2,
-      maxZoom: 21,
-      trackResize: true,
-      mapKey: "web.0b0e490b0bdb4b4abf4fde28c42dd54a",
-      poi: false,
-      traffic: false,
-    });
+    if (map.current) return;
+    map.current = mapInstance(mapContainer);
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
   });
+
+  // useEffect(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(function (position) {
+  //       setLat(position.coords.latitude);
+  //       setLng(position.coords.longitude);
+  //       map.current.panTo(
+  //         [position.coords.longitude, position.coords.latitude],
+  //         { duration: 3000 }
+  //       );
+
+  //       console.log("geolocation is ", position);
+  //     });
+  //   } else {
+  //     console.log("Geolocation is not available in your browser.");
+  //   }
+  // }, []);
+
   return (
     <>
-      <div ref={mapContainer} className="map-container"></div>
+      <div ref={mapContainer} className={styles.mapContainer}></div>
     </>
   );
 }
+//App.jsx:61 59.6061 36.2960
 
 export default App;
