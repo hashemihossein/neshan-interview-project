@@ -26,7 +26,14 @@ const config = {
           "style-loader",
           {
             loader: "css-loader",
+
             options: {
+              modules: {
+                auto: true,
+                localIdentName: "[local]___[path][name]",
+                namedExport: true,
+                exportGlobals: true,
+              },
               importLoaders: 1,
               modules: true,
             },
@@ -36,6 +43,15 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      templateContent: ({ htmlWebpackPlugin }) =>
+        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
+        htmlWebpackPlugin.options.title +
+        '</title></head><body><div id="app"></div></body></html>',
+      filename: "index.html",
+    }),
+  ],
   optimization: {
     runtimeChunk: "single",
     splitChunks: {
@@ -48,15 +64,6 @@ const config = {
       },
     },
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) =>
-        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
-        htmlWebpackPlugin.options.title +
-        '</title></head><body><div id="app"></div></body></html>',
-      filename: "index.html",
-    }),
-  ],
 };
 
 module.exports = config;
