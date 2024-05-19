@@ -6,28 +6,36 @@ import {
 } from "../../hooks";
 import { fetchSearchData } from "../../service";
 import { mainContext } from "../../context";
+import { SearchListRender } from "..";
 
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
   const [searchedText, setSearchedText] = useState("");
   const [apiLoading, setApiLoading] = useState(false);
+
+  const { lat, lng } = useContext(mainContext);
+
+  const { debouncedLat, debouncedLng } = useSearchCoordinatesDebounce(
+    lat,
+    lng,
+    1000
+  );
   const { debouncedSearchTextValue, debounceSearchTextLoading } =
     useSearchTextDebounce(searchedText, 1000);
-  const { lat, lng } = useContext(mainContext);
-  const { debouncedLat, debouncedLng, debounceCoordinatesLoading } =
-    useSearchCoordinatesDebounce(lat, lng, 1000);
+  const [searchResult, setSearchResult] = useState({});
 
   const searchData = useCallback(
     async (searchValue) => {
       setApiLoading(true);
-      await fetchSearchData(searchValue);
+      const result = await fetchSearchData(searchValue);
+      setSearchResult(result?.data);
       setApiLoading(false);
     },
-    [debounceSearchTextLoading, debouncedLat, debouncedLng]
+    [debouncedSearchTextValue, debouncedLat, debouncedLng]
   );
 
   useEffect(() => {
-    searchData(debounceSearchTextLoading);
+    searchData(debouncedSearchTextValue);
   }, [debouncedSearchTextValue, debouncedLat, debouncedLng, searchData]);
 
   const handleSearchTextChange = (event) => {
@@ -51,6 +59,10 @@ export const Search = () => {
             }
           }}
           onChange={handleSearchTextChange}
+        />
+        <SearchListRender
+          data={searchResult}
+          loading={apiLoading || debounceSearchTextLoading}
         />
       </div>
     </div>

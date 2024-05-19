@@ -44,7 +44,7 @@ const config = {
       },
       {
         test: /\.svg$/,
-        use: ["@svgr/webpack", "url-loader", "file-loader"],
+        use: ["file-loader"],
       },
       {
         test: /\.(png|jpg)$/,
