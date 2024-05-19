@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 
 import * as styles from "./App.module.css";
 import { mapInstance, restClient } from "./instances";
+import { Search } from "./component";
 
 function App() {
   const mapContainer = useRef(null);
@@ -39,7 +40,11 @@ function App() {
 
   return (
     <>
-      <div ref={mapContainer} className={styles.mapContainer}></div>
+      <div ref={mapContainer} className={styles.mapContainer}>
+        <div className={styles.componentContainer}>
+          <Search />
+        </div>
+      </div>
     </>
   );
 }

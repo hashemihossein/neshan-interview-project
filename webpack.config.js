@@ -1,7 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const config = {
   entry: "./index.js",
@@ -67,12 +67,9 @@ const config = {
         '</title></head><body><div id="app"></div></body></html>',
       filename: "index.html",
     }),
-    new CopyPlugin([
-      {
-        from: path.resolve(__dirname, "src", "assets"),
-        to: path.resolve(__dirname, "build", "assets"),
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve("./src/assets"), to: "./build/assets" }],
+    }),
   ],
   optimization: {
     runtimeChunk: "single",
