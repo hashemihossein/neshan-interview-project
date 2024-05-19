@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
 import * as styles from "./search.module.css";
-import { useDebounce } from "../../hooks";
+import {
+  useSearchCoordinatesDebounce,
+  useSearchTextDebounce,
+} from "../../hooks";
 import { fetchSearchData } from "../../service";
+import { mainContext } from "../../context";
 
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
   const [searchedText, setSearchedText] = useState("");
   const [apiLoading, setApiLoading] = useState(false);
-  const { debouncedValue, debounceLoading } = useDebounce(searchedText, 1000);
+  const { debouncedSearchTextValue, debounceSearchTextLoading } =
+    useSearchTextDebounce(searchedText, 1000);
+  const { lat, lng } = useContext(mainContext);
+  const { debouncedLat, debouncedLng, debounceCoordinatesLoading } =
+    useSearchCoordinatesDebounce(lat, lng, 1000);
 
   const searchData = useCallback(
     async (searchValue) => {
@@ -15,16 +23,15 @@ export const Search = () => {
       await fetchSearchData(searchValue);
       setApiLoading(false);
     },
-    [debouncedValue]
+    [debounceSearchTextLoading, debouncedLat, debouncedLng]
   );
 
   useEffect(() => {
-    searchData(debouncedValue);
-  }, [debouncedValue, searchData]);
+    searchData(debounceSearchTextLoading);
+  }, [debouncedSearchTextValue, debouncedLat, debouncedLng, searchData]);
 
   const handleSearchTextChange = (event) => {
     setSearchedText(event.target.value);
-    console.log(debounceLoading);
   };
 
   return (
