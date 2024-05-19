@@ -6,22 +6,17 @@ export const Search = () => {
   const [focused, setFocused] = useState(false);
   const [searchedText, setSearchedText] = useState("");
 
-  const debouncedValue = useDebounce(searchedText, 1000);
+  const { debouncedValue, debounceLoading } = useDebounce(searchedText, 1000);
 
-  const DSearch = useCallback(async () => {
-    const res = await fetch(
-      `https://demo.dataverse.org/api/search?q=${debouncedValue}`
-    );
-    const json = await res.json();
-    console.log(json);
-  }, [debouncedValue]);
+  const searchData = useCallback(async (searchValue) => {}, [debouncedValue]);
 
   useEffect(() => {
-    DSearch();
-  }, [debouncedValue, DSearch]);
+    searchData(debouncedValue);
+  }, [debouncedValue, searchData]);
 
   const handleSearchTextChange = (event) => {
     setSearchedText(event.target.value);
+    console.log(loading);
   };
 
   return (
