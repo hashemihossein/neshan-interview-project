@@ -7,6 +7,7 @@ import {
 import { fetchSearchData } from "../../service";
 import { mainContext } from "../../context";
 import { SearchListRender } from "..";
+import { restClient } from "./../../instances";
 
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
@@ -28,7 +29,7 @@ export const Search = () => {
     async (searchValue) => {
       setApiLoading(true);
       const result = await fetchSearchData(searchValue);
-      setSearchResult(result?.data);
+      setSearchResult(result);
       setApiLoading(false);
     },
     [debouncedSearchTextValue, debouncedLat, debouncedLng]
@@ -43,27 +44,32 @@ export const Search = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.mainContainer}>
       <div
-        className={styles.inputContainer}
         style={{
-          height: expanded ? "100vh" : "3rem",
+          height: expanded ? "100vh" : "4rem",
         }}
+        className={styles.contentContainer}
       >
-        <input
-          className={styles.input}
-          type="text"
-          onFocus={() => {
-            if (expanded === false) {
-              setExpanded(true);
-            }
-          }}
-          onChange={handleSearchTextChange}
-        />
-        <SearchListRender
-          data={searchResult}
-          loading={apiLoading || debounceSearchTextLoading}
-        />
+        <div className={styles.expandedView}>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.input}
+              type="text"
+              onFocus={() => {
+                if (expanded === false) {
+                  setExpanded(true);
+                }
+              }}
+              onChange={handleSearchTextChange}
+            />
+          </div>
+          <SearchListRender
+            data={searchResult}
+            loading={apiLoading || debounceSearchTextLoading}
+            emptySearchText={searchedText == ""}
+          />
+        </div>
       </div>
     </div>
   );
