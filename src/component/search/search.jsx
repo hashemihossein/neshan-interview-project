@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import * as styles from "./search.module.css";
 import { useDebounce } from "../../hooks";
 import { fetchSearchData } from "../../service";
@@ -17,9 +17,6 @@ export const Search = () => {
     },
     [debouncedValue]
   );
-  useEffect(() => {
-    console.log(apiLoading, 'this is api Loading , "D"D');
-  }, [apiLoading]);
 
   useEffect(() => {
     searchData(debouncedValue);

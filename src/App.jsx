@@ -1,15 +1,14 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 
 import * as styles from "./App.module.css";
 import { mapInstance, restClient } from "./instances";
 import { Search } from "./component";
+import { mainContext } from "./context";
 
 function App() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(51.389);
-  const [lat, setLat] = useState(35.6892);
-  const [zoom, setZoom] = useState(9);
+  const { lng, setLng, lat, setLat, zoom, setZoom } = useContext(mainContext);
 
   useEffect(() => {
     if (map.current) return;
