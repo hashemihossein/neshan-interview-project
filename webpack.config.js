@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const config = {
   entry: "./index.js",
@@ -41,6 +42,21 @@ const config = {
         ],
         include: /\.module\.css$/,
       },
+      {
+        test: /\.svg$/,
+        use: ["@svgr/webpack", "url-loader", "file-loader"],
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              mimetype: "image/png",
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -51,6 +67,12 @@ const config = {
         '</title></head><body><div id="app"></div></body></html>',
       filename: "index.html",
     }),
+    new CopyPlugin([
+      {
+        from: path.resolve(__dirname, "src", "assets"),
+        to: path.resolve(__dirname, "build", "assets"),
+      },
+    ]),
   ],
   optimization: {
     runtimeChunk: "single",
