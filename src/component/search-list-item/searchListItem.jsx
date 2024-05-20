@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as styles from "./searchListItem.module.css";
 import RoutingIcon from "./../../assets/RoutingIcon.svg";
-import { ItemDetail } from "..";
+import { ItemDetail, StarRate } from "..";
 
 export const SearchListItem = (props) => {
   const [detailPageExpanded, setDetailPageExpanded] = useState(false);
@@ -17,14 +17,15 @@ export const SearchListItem = (props) => {
         >
           <div>
             <div className={styles.title}>{item?.title}</div>
+            <StarRate />
             <div className={styles.category}>{item?.category}</div>
             <div className={styles.address}>{item?.address}</div>
           </div>
         </button>
 
-        <button type="button" className={styles.buttonContainer}>
+        {/* <button type="button" className={styles.buttonContainer}>
           <img width={"22px"} alt="RoutingIcon" src={RoutingIcon} />
-        </button>
+        </button> */}
       </div>
 
       <div className={styles.hr} />

@@ -97,6 +97,7 @@ export const Search = () => {
       <div
         style={{
           height: expanded ? "100vh" : "0px",
+          boxShadow: expanded ? "0px 0px 10px 1px rgb(141, 141, 141)" : "none",
         }}
         className={styles.contentContainer}
       >
