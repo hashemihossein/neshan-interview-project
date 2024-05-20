@@ -1,8 +1,10 @@
 import React from "react";
 import * as styles from "./searchListRender.module.css";
 import SpinnerSvg from "../../assets/SpinnerSvg.svg";
+import { SearchListItem } from "..";
 
-export const SearchListRender = ({ data, emptySearchText, loading }) => {
+export const SearchListRender = (props) => {
+  const { data, loading, emptySearchText } = props;
   const conditionRendering = [
     {
       value: emptySearchText,
@@ -23,7 +25,7 @@ export const SearchListRender = ({ data, emptySearchText, loading }) => {
     {
       value: data?.count === 0,
       RenderComponent: () => {
-        return <div className={styles.spinnerContainer}>موردی یافت نشد</div>;
+        return <div className={styles.notFoundContainer}>موردی یافت نشد</div>;
       },
     },
     {
@@ -33,9 +35,11 @@ export const SearchListRender = ({ data, emptySearchText, loading }) => {
           <ul>
             {data?.items?.map((item, index) => {
               return (
-                <li>
-                  <div>item {index}</div>;
-                </li>
+                <SearchListItem
+                  key={String(item.location.x + item.location.y)}
+                  item={item}
+                  index={index}
+                />
               );
             })}
           </ul>

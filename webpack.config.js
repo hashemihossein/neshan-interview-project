@@ -16,6 +16,19 @@ const config = {
         use: "babel-loader",
         exclude: /node_modules/,
       },
+      // {
+      //   test: /\.(woff|woff2)$/,
+      //   use: [
+      //     {
+      //       loader: "file-loader",
+      //       options: {
+      //         name: "[name].[ext]",
+      //         outputPath: "fonts/",
+      //         publicPath: "fonts/",
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],

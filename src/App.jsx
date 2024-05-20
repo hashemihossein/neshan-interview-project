@@ -87,6 +87,13 @@ function App() {
       geojsonData.features.length > 0
     ) {
       setMapLayer(map, geojsonData);
+    } else {
+      if (map.current.getLayer("points-layer")) {
+        map.current.removeLayer("points-layer");
+      }
+      if (map.current.getSource("points-source")) {
+        map.current.removeSource("points-source");
+      }
     }
   }, [searchResult]);
 
