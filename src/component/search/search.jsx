@@ -23,10 +23,6 @@ export const Search = () => {
     setApiLoading,
   } = useContext(searchContext);
 
-  useEffect(() => {
-    console.log("lat , long changed to ", lat, lng);
-  }, [lat, lng]);
-
   const { debouncedLat, debouncedLng } = useSearchCoordinatesDebounce(
     lat,
     lng,

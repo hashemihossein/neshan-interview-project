@@ -4,6 +4,7 @@ import * as styles from "./App.module.css";
 import { mapInstance, restClient } from "./instances";
 import { Search } from "./component";
 import { mainContext, searchContext } from "./context";
+import { convertToGeoJSON } from "./utils";
 
 function App() {
   const mapContainer = useRef(null);
@@ -23,7 +24,11 @@ function App() {
   const { searchResult } = useContext(searchContext);
 
   useEffect(() => {
-    console.log("searchResult is changd!");
+    console.log(
+      "searchResult is changd!",
+      convertToGeoJSON(searchResult?.items || [])
+    );
+    const geojsonData = convertToGeoJSON(searchResult?.items || []);
   }, [searchResult]);
 
   // useEffect(() => {
@@ -46,13 +51,12 @@ function App() {
   return (
     <>
       <div ref={mapContainer} className={styles.mapContainer}>
-        <div className={styles.componentContainer}>
-          <Search />
-        </div>
+        {/* <div className={styles.componentContainer}> */}
+        <Search />
+        {/* </div> */}
       </div>
     </>
   );
 }
-//App.jsx:61 59.6061 36.2960
 
 export default App;
