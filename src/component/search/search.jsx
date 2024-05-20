@@ -23,12 +23,6 @@ export const Search = () => {
     setApiLoading,
   } = useContext(searchContext);
 
-  const { debouncedLat, debouncedLng } = useSearchCoordinatesDebounce(
-    lat,
-    lng,
-    1000
-  );
-
   const { debouncedSearchTextValue, debounceSearchTextLoading } =
     useSearchTextDebounce(searchedText, 1000);
 
@@ -39,12 +33,12 @@ export const Search = () => {
       setSearchResult(result);
       setApiLoading(false);
     },
-    [debouncedSearchTextValue, debouncedLat, debouncedLng]
+    [debouncedSearchTextValue]
   );
 
   useEffect(() => {
     searchData(debouncedSearchTextValue);
-  }, [debouncedSearchTextValue, debouncedLat, debouncedLng, searchData]);
+  }, [debouncedSearchTextValue, searchData]);
 
   const handleSearchTextChange = (event) => {
     setSearchedText(event.target.value);

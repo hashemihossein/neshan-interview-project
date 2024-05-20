@@ -6,6 +6,7 @@ import { Search } from "./component";
 import { mainContext, searchContext } from "./context";
 import { convertToGeoJSON } from "./utils";
 import { customIconBase64 } from "./constants";
+import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
 
 const setMapLayer = (map, geojsonData) => {
   if (map.current.getLayer("points-layer")) {
@@ -27,18 +28,26 @@ const setMapLayer = (map, geojsonData) => {
     layout: {
       "icon-image": "custom-icon",
       "icon-size": 0.05,
-      "text-field": ["get", "name"],
-      "text-offset": [0, 1.25],
-      "text-anchor": "top",
-      "text-allow-overlap": true,
       "icon-allow-overlap": true,
       "symbol-spacing": 50,
     },
-    paint: {
-      "text-color": "#ff2c2c",
-    },
     minzoom: 2,
     maxzoom: 21,
+  });
+
+  let bounds = new nmp_mapboxgl.LngLatBounds();
+
+  geojsonData.features.forEach((feature) => {
+    bounds.extend(feature.geometry.coordinates);
+  });
+
+  map.current.fitBounds(bounds, {
+    padding: {
+      right: window.innerWidth / 4 + 20,
+      left: 20,
+      top: 20,
+      bottom: 20,
+    },
   });
 };
 
@@ -77,22 +86,22 @@ function App() {
     }
   }, [searchResult]);
 
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLat(position.coords.latitude);
-        setLng(position.coords.longitude);
-        map.current.panTo(
-          [position.coords.longitude, position.coords.latitude],
-          { duration: 3000 }
-        );
+  // useEffect(() => {
+  //   if ("geolocation" in navigator) {
+  //     navigator.geolocation.getCurrentPosition(function (position) {
+  //       setLat(position.coords.latitude);
+  //       setLng(position.coords.longitude);
+  //       map.current.panTo(
+  //         [position.coords.longitude, position.coords.latitude],
+  //         { duration: 3000 }
+  //       );
 
-        console.log("geolocation is ", position);
-      });
-    } else {
-      console.log("Geolocation is not available in your browser.");
-    }
-  }, []);
+  //       console.log("geolocation is ", position);
+  //     });
+  //   } else {
+  //     console.log("Geolocation is not available in your browser.");
+  //   }
+  // }, []);
 
   return (
     <>
