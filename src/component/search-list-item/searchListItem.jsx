@@ -12,7 +12,7 @@ export const SearchListItem = (props) => {
           <div className={styles.category}>{item?.category}</div>
           <div className={styles.address}>{item?.address}</div>
         </div>
-        <button className={styles.buttonContainer}>
+        <button type="button" className={styles.buttonContainer}>
           <img width={"22px"} alt="RoutingIcon" src={RoutingIcon} />
         </button>
       </div>
