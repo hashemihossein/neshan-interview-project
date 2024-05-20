@@ -29,7 +29,7 @@ export const Search = () => {
   const searchData = useCallback(
     async (searchValue) => {
       setApiLoading(true);
-      const result = await fetchSearchData(searchValue);
+      const result = await fetchSearchData(lat, lng, searchValue);
       setSearchResult(result);
       setApiLoading(false);
     },
