@@ -43,10 +43,10 @@ const setMapLayer = (map, geojsonData) => {
 
   map.current.fitBounds(bounds, {
     padding: {
-      right: window.innerWidth / 4 + 20,
-      left: 20,
-      top: 20,
-      bottom: 20,
+      right: window.innerWidth / 4 + 30,
+      left: 30,
+      top: 30,
+      bottom: 30,
     },
   });
 };
@@ -81,7 +81,11 @@ function App() {
 
   useEffect(() => {
     const geojsonData = convertToGeoJSON(searchResult?.items || []);
-    if (map.current?.isStyleLoaded() && mapIconLoaded) {
+    if (
+      map.current?.isStyleLoaded() &&
+      mapIconLoaded &&
+      geojsonData.features.length > 0
+    ) {
       setMapLayer(map, geojsonData);
     }
   }, [searchResult]);

@@ -1,9 +1,9 @@
 import React from "react";
 import { restClient } from "../../instances";
 
-export const fetchSearchData = async (searchValue) => {
+export const fetchSearchData = async (lat, lng, searchValue) => {
   const result = restClient
-    .get("v1/search", { lat: 35.7219, lng: 51.3347, term: searchValue })
+    .get("v1/search", { lat, lng, term: searchValue })
     .then((res) => {
       return res?.data;
     })

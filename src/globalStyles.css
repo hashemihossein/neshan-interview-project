@@ -7,6 +7,8 @@ body {
 
 * {
   box-sizing: border-box;
+  font-family: "Vazir", sans-serif;
+  font-size: 16px;
 }
 
 *::-webkit-scrollbar {
@@ -19,15 +21,43 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-.map-container {
-  position: absolute;
-  z-index: 0;
-  height: 100vh;
-  width: 100%;
+@font-face {
+  font-family: "Vazir";
+  src:
+    url("./assets/fonts/Vazir.woff") format("woff"),
+    url("./assets/fonts/Vazir.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
-
-.mapboxgl-ctrl-geolocate {
-  display: none;
-  background-color: red;
-  color: red;
+@font-face {
+  font-family: "Vazir-Bold";
+  src:
+    url("./assets/fonts/Vazir-Bold.woff") format("woff"),
+    url("./assets/fonts/Vazir-Bold.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazir-Medium";
+  src:
+    url("./assets/fonts/Vazir-Medium.woff") format("woff"),
+    url("./assets/fonts/Vazir-Medium.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazir-Light";
+  src:
+    url("./assets/fonts/Vazir-Light.woff") format("woff"),
+    url("./assets/fonts/Vazir-Light.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazir-Thin";
+  src:
+    url("./assets/fonts/Vazir-Thin.woff") format("woff"),
+    url("./assets/fonts/Vazir-Thin.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
