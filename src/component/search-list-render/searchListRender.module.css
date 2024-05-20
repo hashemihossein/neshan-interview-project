@@ -1,7 +1,6 @@
 .container {
   width: 100%;
   margin-top: 10px;
-  background-color: red;
   overflow: auto;
   height: 150vh;
 }
@@ -11,7 +10,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  font-family: "Vazir-Bold";
+  font-family: "Vazir";
 }
 
 .notFoundContainer {
@@ -19,5 +18,10 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  font-family: "Vazir-Bold";
+  font-family: "Vazir";
+}
+
+ul {
+  padding-inline-start: 0px;
+  padding: 20px;
 }

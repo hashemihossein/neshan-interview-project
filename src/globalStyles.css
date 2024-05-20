@@ -21,6 +21,10 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+ul {
+  list-style-type: none;
+}
+
 @font-face {
   font-family: "Vazir";
   src:
