@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as styles from "./searchListItem.module.css";
-import RoutingIcon from "./../../assets/RoutingIcon.svg";
+import RoutingIcon from "./../../assets/Routing.svg";
 import { ItemDetail, StarRate } from "..";
 
 export const SearchListItem = (props) => {

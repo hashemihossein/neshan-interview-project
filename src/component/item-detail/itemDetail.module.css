@@ -2,41 +2,142 @@
   display: none;
 }
 
-.containerFadeIn {
+.container {
   height: 100vh;
   width: 25vw;
-  background-color: red;
+  background-color: white;
   position: absolute;
+  z-index: 200;
   top: 0;
+}
+
+.cFadeIn {
+  opacity: 1;
   right: 0;
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.containerFadeOut {
-  height: 100vh;
-  width: 25vw;
-  background-color: red;
-  position: absolute;
-  top: 0;
-  right: 0;
-  opacity: 0;
-  animation: fadeOut 0.5s ease-in-out;
+.cFadeOut {
+  right: 0px;
+  animation: fadeOut 0.5s ease-in-out 0.2s;
 }
 
 @keyframes fadeIn {
   from {
+    right: -25vw;
     opacity: 0;
   }
   to {
+    right: 0;
     opacity: 1;
   }
 }
 
 @keyframes fadeOut {
   from {
+    right: 0;
     opacity: 1;
   }
   to {
+    right: -25vw;
     opacity: 0;
   }
+}
+
+@keyframes closeButtonFadeIn {
+  from {
+    right: -25vw;
+    opacity: 0;
+  }
+  to {
+    right: 25vw;
+    opacity: 1;
+  }
+}
+
+@keyframes closeButtonFadeOut {
+  from {
+    right: 25vw;
+    opacity: 1;
+  }
+  to {
+    right: -25vw;
+    opacity: 0;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: calc(50vh - 35px);
+  background-color: white;
+  box-shadow: 0px 0px 10px 1px rgb(141, 141, 141);
+  width: 60px;
+  height: 70px;
+  border: none;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+  cursor: pointer;
+}
+
+.bFadeIn {
+  right: 25vw;
+  opacity: 1;
+  animation: closeButtonFadeIn 0.7s ease-in-out;
+}
+
+.bFadeOut {
+  right: -25vw;
+  opacity: 0;
+  animation: closeButtonFadeOut 0.5s ease-in-out;
+}
+
+.buttonHidden {
+  display: none;
+}
+
+.image {
+  width: 100%;
+  height: 12vw;
+  object-fit: cover;
+}
+
+.addImageButtonContainer {
+  position: relative;
+  top: -25px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.addImageButton {
+  border: 1px solid #1976d2;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 50px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.addImageButton:hover {
+  box-shadow: 0px 0px 15px 0.1px #1976d2;
+}
+
+.addImageButton span {
+  color: #1976d2;
+  margin-left: 10px;
+  font-size: 13px;
 }
