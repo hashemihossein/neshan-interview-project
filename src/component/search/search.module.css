@@ -1,6 +1,6 @@
 .mainContainer {
   width: 25vw;
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   top: 0;

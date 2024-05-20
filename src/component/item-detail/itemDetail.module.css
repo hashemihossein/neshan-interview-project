@@ -1,0 +1,46 @@
+.containerHidden {
+  display: none;
+}
+
+.containerFadeIn {
+  height: 100vh;
+  width: 25vw;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.containerFadeOut {
+  height: 100vh;
+  width: 25vw;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
