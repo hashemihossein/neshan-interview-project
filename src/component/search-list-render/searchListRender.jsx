@@ -32,7 +32,6 @@ export const SearchListRender = ({ data, emptySearchText, loading }) => {
         return (
           <ul>
             {data?.items?.map((item, index) => {
-              console.log(item, index, "D:D:D:D:");
               return (
                 <li>
                   <div>item {index}</div>;
@@ -48,7 +47,7 @@ export const SearchListRender = ({ data, emptySearchText, loading }) => {
   return (
     <div className={styles.container}>
       {/* fix this */}
-      <div class="1" style={{ overflow: "auto", paddingBottom: "60vh" }}>
+      <div style={{ overflow: "auto", paddingBottom: "60vh" }}>
         {conditionRendering[
           conditionRendering.findIndex((item) => item.value === true)
         ].RenderComponent()}

@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import * as styles from "./App.module.css";
 import { mapInstance, restClient } from "./instances";
 import { Search } from "./component";
-import { mainContext } from "./context";
+import { mainContext, searchContext } from "./context";
 
 function App() {
   const mapContainer = useRef(null);
@@ -19,6 +19,12 @@ function App() {
       setZoom(map.current.getZoom().toFixed(2));
     });
   });
+
+  const { searchResult } = useContext(searchContext);
+
+  useEffect(() => {
+    console.log("searchResult is changd!");
+  }, [searchResult]);
 
   // useEffect(() => {
   //   if ("geolocation" in navigator) {

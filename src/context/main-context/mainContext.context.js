@@ -3,7 +3,7 @@ import { defaultLat, defaultLng } from "../../constants/map/map.constants";
 
 export const mainContext = createContext(null);
 
-export function ContextProvider({ children }) {
+export function MainContextProvider({ children }) {
   const [lat, setLat] = useState(defaultLat);
   const [lng, setLng] = useState(defaultLng);
   const [zoom, setZoom] = useState(15);

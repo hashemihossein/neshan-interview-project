@@ -8,22 +8,33 @@ import { fetchSearchData } from "../../service";
 import { mainContext } from "../../context";
 import { SearchListRender } from "..";
 import { restClient } from "./../../instances";
+import { searchContext } from "../../context";
 
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
-  const [searchedText, setSearchedText] = useState("");
-  const [apiLoading, setApiLoading] = useState(false);
 
   const { lat, lng } = useContext(mainContext);
+  const {
+    searchResult,
+    setSearchResult,
+    searchedText,
+    setSearchedText,
+    apiLoading,
+    setApiLoading,
+  } = useContext(searchContext);
+
+  useEffect(() => {
+    console.log("lat , long changed to ", lat, lng);
+  }, [lat, lng]);
 
   const { debouncedLat, debouncedLng } = useSearchCoordinatesDebounce(
     lat,
     lng,
     1000
   );
+
   const { debouncedSearchTextValue, debounceSearchTextLoading } =
     useSearchTextDebounce(searchedText, 1000);
-  const [searchResult, setSearchResult] = useState({});
 
   const searchData = useCallback(
     async (searchValue) => {
