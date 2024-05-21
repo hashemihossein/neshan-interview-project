@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as styles from "./searchListItem.module.css";
 import RoutingIcon from "./../../assets/Routing.svg";
 import { ItemDetail, StarRate } from "..";
+import { mapServices } from "../../service";
+import { mapContext } from "../../context";
 
 export const SearchListItem = (props) => {
+  const { map } = useContext(mapContext);
   const [detailPageExpanded, setDetailPageExpanded] = useState(false);
 
   const { item, index } = props;
@@ -12,7 +15,10 @@ export const SearchListItem = (props) => {
     <li className={styles.container}>
       <div className={styles.rowContainer}>
         <button
-          onClick={() => setDetailPageExpanded(true)}
+          onClick={() => {
+            mapServices.mapFlyTo(map, [item?.location?.x, item?.location?.y]);
+            setDetailPageExpanded(true);
+          }}
           className={styles.containerButton}
         >
           <div>
@@ -22,10 +28,6 @@ export const SearchListItem = (props) => {
             <div className={styles.address}>{item?.address}</div>
           </div>
         </button>
-
-        {/* <button type="button" className={styles.buttonContainer}>
-          <img width={"22px"} alt="RoutingIcon" src={RoutingIcon} />
-        </button> */}
       </div>
 
       <div className={styles.hr} />

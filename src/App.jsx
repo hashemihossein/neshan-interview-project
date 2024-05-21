@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     if (map.current) return;
     mapServices.setInitialMap(map, mapContainer, setLng, setLat, setZoom);
+    mapServices.mapFlyTo(map, [lng, lat], 11);
     mapServices.mapLoadImage(map, customIconBase64);
   });
 

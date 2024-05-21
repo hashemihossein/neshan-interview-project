@@ -12,12 +12,7 @@ export const mapServices = {
         });
         if (features.length > 0) {
           const coordinates = features[0].geometry.coordinates.slice();
-          mapRef.current.flyTo({
-            center: coordinates,
-            zoom: 15,
-            essential: true,
-            padding: { right: window.innerWidth / 4 },
-          });
+          this.mapFlyTo(mapRef, coordinates);
         }
       });
     });
@@ -39,6 +34,23 @@ export const mapServices = {
         mapRef.current.addImage("custom-icon", img);
       }
     );
+  },
+
+  mapFitBounds(mapRef, geojsonData) {
+    let bounds = new nmp_mapboxgl.LngLatBounds();
+
+    geojsonData.features.forEach((feature) => {
+      bounds.extend(feature.geometry.coordinates);
+    });
+
+    mapRef.current.fitBounds(bounds, {
+      padding: {
+        right: 30,
+        left: 30,
+        top: 30,
+        bottom: 30,
+      },
+    });
   },
 
   setMapLayer(mapRef, geojsonData) {
@@ -68,19 +80,15 @@ export const mapServices = {
       maxzoom: 21,
     });
 
-    let bounds = new nmp_mapboxgl.LngLatBounds();
+    this.mapFitBounds(mapRef, geojsonData);
+  },
 
-    geojsonData.features.forEach((feature) => {
-      bounds.extend(feature.geometry.coordinates);
-    });
-
-    mapRef.current.fitBounds(bounds, {
-      padding: {
-        right: window.innerWidth / 4 + 30,
-        left: 30,
-        top: 30,
-        bottom: 30,
-      },
+  mapFlyTo(mapRef, coordinates, zoom = 15) {
+    mapRef.current.flyTo({
+      center: coordinates,
+      zoom: zoom,
+      essential: true,
+      padding: { right: window.innerWidth / 4 },
     });
   },
 };
