@@ -18,7 +18,7 @@ export const SearchListItem = (props) => {
           <div>
             <div className={styles.title}>{item?.title}</div>
             <StarRate />
-            <div className={styles.category}>{item?.category}</div>
+            <div className={styles.category}>{item?.type}</div>
             <div className={styles.address}>{item?.address}</div>
           </div>
         </button>

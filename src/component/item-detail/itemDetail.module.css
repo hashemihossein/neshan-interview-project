@@ -106,8 +106,8 @@
 }
 
 .addImageButtonContainer {
-  position: relative;
-  top: -25px;
+  position: absolute;
+  top: calc(12vw - 20px);
   left: 0;
   right: 0;
   display: flex;
@@ -140,4 +140,91 @@
   color: #1976d2;
   margin-left: 10px;
   font-size: 13px;
+}
+
+.generalInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.titleRowContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.categoryImageContainer {
+  height: 100%;
+}
+
+.titleViewContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.type {
+  font-size: 12px;
+  font-weight: rgb(119, 119, 119);
+}
+.distanceInfoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.hr {
+  height: 1px;
+  width: 100%;
+  background-color: rgb(190, 190, 190);
+}
+
+ul {
+  width: 100%;
+  padding: 0;
+}
+
+.infoTabContainer {
+  display: flex;
+  height: 70px;
+  overflow-x: auto;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.infoTabsItemButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  white-space: nowrap;
+  line-height: 35px;
+  height: 35px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 40px;
+}
+
+.infoTabsItemButton span {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
 }

@@ -1,4 +1,4 @@
-export const MAP_KEY = "web.0b0e490b0bdb4b4abf4fde28c42dd54a";
+export const MAP_KEY = "web.a3e287af1e6c48c796ef8c1ce0d8f393";
 export const defaultLng = 51.389;
 export const defaultLat = 35.6892;
 
