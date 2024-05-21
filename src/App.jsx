@@ -21,6 +21,7 @@ function App() {
     if (map.current) return;
     mapServices.setInitialMap(map, mapContainer, setLng, setLat, setZoom);
     mapServices.mapLoadImage(map, customIconBase64, "custom-icon");
+    mapServices.mapLoadImage(map, originPolylineIcon, "origin-icon");
   });
 
   useEffect(() => {

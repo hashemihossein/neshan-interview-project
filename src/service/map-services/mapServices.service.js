@@ -70,6 +70,37 @@ export const mapServices = {
         coordinates: geojsonCoordinates[geojsonCoordinates.length - 1],
       },
     };
+
+    mapRef.current.addSource("origin", {
+      type: "geojson",
+      data: originIcon,
+    });
+
+    mapRef.current.addSource("destination", {
+      type: "geojson",
+      data: destinationIcon,
+    });
+
+    mapRef.current.addLayer({
+      id: "origin",
+      type: "symbol",
+      source: "origin",
+      layout: {
+        "icon-image": "origin-icon",
+        "icon-size": 1,
+      },
+    });
+
+    mapRef.current.addLayer({
+      id: "destination",
+      type: "symbol",
+      source: "destination",
+      layout: {
+        "icon-image": "custom-icon",
+        "icon-size": 1,
+        "icon-offset": [0, -10],
+      },
+    });
   },
 
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
