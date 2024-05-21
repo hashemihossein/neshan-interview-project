@@ -101,6 +101,16 @@ export const mapServices = {
         "icon-offset": [0, -10],
       },
     });
+
+    const bounds = new nmp_mapboxgl.LngLatBounds(
+      geojsonCoordinates[0],
+      geojsonCoordinates[0]
+    );
+    for (let i = 0; i < geojsonCoordinates.length; i++) {
+      bounds.extend(geojsonCoordinates[i]);
+    }
+    console.log(bounds, "D:D:D:D");
+    mapRef.current.fitBounds(bounds, { padding: 100 });
   },
 
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
