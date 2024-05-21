@@ -11,7 +11,7 @@ import {
   useSearchTextDebounce,
 } from "../../hooks";
 import { fetchSearchData } from "../../service";
-import { mainContext } from "../../context";
+import { mapContext } from "../../context";
 import { SearchListRender } from "..";
 import { restClient } from "./../../instances";
 import { searchContext } from "../../context";
@@ -22,7 +22,7 @@ import CrossIcon from "./../../assets/Cross.svg";
 export const Search = () => {
   const [expanded, setExpanded] = useState(false);
   const searchTextInput = useRef(null);
-  const { lat, lng } = useContext(mainContext);
+  const { lat, lng } = useContext(mapContext);
   const {
     searchResult,
     setSearchResult,

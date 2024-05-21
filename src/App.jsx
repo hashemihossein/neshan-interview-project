@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import * as styles from "./App.module.css";
 import { mapInstance, restClient } from "./instances";
 import { Search } from "./component";
-import { mainContext, searchContext } from "./context";
+import { mapContext, searchContext } from "./context";
 import { convertToGeoJSON } from "./utils";
 import { customIconBase64 } from "./constants";
 import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
@@ -53,9 +53,9 @@ const setMapLayer = (map, geojsonData) => {
 
 function App() {
   const mapContainer = useRef(null);
-  const map = useRef(null);
   const [mapIconLoaded, setMapIconLoaded] = useState(false);
-  const { lng, setLng, lat, setLat, zoom, setZoom } = useContext(mainContext);
+  const { map, lng, setLng, lat, setLat, zoom, setZoom } =
+    useContext(mapContext);
 
   useEffect(() => {
     if (map.current) return;
@@ -70,6 +70,23 @@ function App() {
         setMapIconLoaded(true);
       }
     );
+    map.current.on("load", () => {
+      map.current.on("click", (e) => {
+        // Check if the clicked features belong to your icon layer
+        const features = map.current.queryRenderedFeatures(e.point, {
+          layers: ["points-layer"],
+        });
+        if (features.length > 0) {
+          const coordinates = features[0].geometry.coordinates.slice();
+          map.current.flyTo({
+            center: coordinates,
+            zoom: 15, // Adjust the zoom level as needed
+            essential: true,
+            padding: { right: window.innerWidth / 4 },
+          });
+        }
+      });
+    });
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
