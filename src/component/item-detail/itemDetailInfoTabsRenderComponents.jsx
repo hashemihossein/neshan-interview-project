@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as styles from "./itemDetailInfoTabsRenderComponents.module.css";
 import RoutingIcon from "../../assets/Routing.svg";
 import CallIcon from "../../assets/Call.svg";
@@ -9,6 +9,8 @@ import ClockIcon from "../../assets/Clock.svg";
 import WWWIcon from "../../assets/WWW.svg";
 import StarIcon from "../../assets/Star.svg";
 import StarFillIcon from "../../assets/StarFill.svg";
+import { fetchRoutingData } from "../../service";
+import { mapContext } from "../../context";
 
 const StarRater = () => {
   const [mouseEnterIndex, setMouseEnterIndex] = useState(-1);
@@ -33,13 +35,23 @@ const StarRater = () => {
 };
 
 export const PublicInformations = (props) => {
-  const { region, neighbourhood, address } = props;
+  const { region, neighbourhood, address, location } = props;
+  const { lat, lng } = useContext(mapContext);
   const buttons = [
     {
       title: "مسیریابی",
       iconSrc: RoutingIcon,
       isPrimary: true,
-      clickHandler: () => {},
+      clickHandler: async () => {
+        console.log("hey :LD:D");
+        const result = await fetchRoutingData(
+          lat,
+          lng,
+          location?.y,
+          location?.x
+        );
+        console.log(result, "this is result if routing api");
+      },
     },
     {
       title: "تماس",
@@ -101,6 +113,7 @@ export const PublicInformations = (props) => {
         {buttons.map((button) => (
           <div key={button.title} className={styles.piButtonContainer}>
             <button
+              onClick={button?.clickHandler}
               className={`${styles.piButtonBase} ${button.isPrimary ? styles.piPrimaryButton : styles.piNonPrimaryButton}`}
             >
               <img width={"25px"} height={"25px"} src={button.iconSrc} />
