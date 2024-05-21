@@ -13,6 +13,7 @@
     "start": "webpack serve --mode development"
   },
   "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
     "@neshan-maps-platform/mapbox-gl": "^1.1.3",
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.6.8",

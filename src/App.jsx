@@ -5,7 +5,7 @@ import { restClient } from "./instances";
 import { Search } from "./component";
 import { mapContext, searchContext } from "./context";
 import { convertToGeoJSON } from "./utils";
-import { customIconBase64 } from "./constants";
+import { customIconBase64, originPolylineIcon } from "./constants";
 import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
 import { mapServices } from "./service";
 
@@ -20,8 +20,7 @@ function App() {
   useEffect(() => {
     if (map.current) return;
     mapServices.setInitialMap(map, mapContainer, setLng, setLat, setZoom);
-    mapServices.mapFlyTo(map, [lng, lat], 11);
-    mapServices.mapLoadImage(map, customIconBase64);
+    mapServices.mapLoadImage(map, customIconBase64, "custom-icon");
   });
 
   useEffect(() => {
@@ -29,12 +28,7 @@ function App() {
     if (map.current?.isStyleLoaded() && geojsonData.features.length > 0) {
       mapServices.setMapLayer(map, geojsonData);
     } else {
-      if (map.current.getLayer("points-layer")) {
-        map.current.removeLayer("points-layer");
-      }
-      if (map.current.getSource("points-source")) {
-        map.current.removeSource("points-source");
-      }
+      mapServices.mapRemoveLayersAndSources(map);
     }
   }, [searchResult]);
 

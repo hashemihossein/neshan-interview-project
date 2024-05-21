@@ -1,21 +1,60 @@
 import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
 import { mapInstance } from "../../instances";
+import polyline from "@mapbox/polyline";
 
 export const mapServices = {
+  addPolyline(mapRef, polylineString) {
+    const coordinates = polyline.decode(polylineString);
+    const geojsonCoordinates = coordinates.map((coord) => [coord[1], coord[0]]);
+
+    const geojson = {
+      type: "Feature",
+      geometry: {
+        type: "LineString",
+        coordinates: geojsonCoordinates,
+      },
+    };
+    console.log(geojson, "this is geoJson");
+    this.mapRemoveLayersAndSources(mapRef);
+
+    mapRef.current.addSource("route", {
+      type: "geojson",
+      data: geojson,
+    });
+
+    mapRef.current.addLayer({
+      id: "route",
+      type: "line",
+      source: "route",
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "#8a1ef7",
+        "line-width": 8,
+      },
+    });
+
+    const originIcon = {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: geojsonCoordinates[0],
+      },
+    };
+
+    const destinationIcon = {
+      type: "Feature",
+      geometry: {
+        type: "Point",
+        coordinates: geojsonCoordinates[geojsonCoordinates.length - 1],
+      },
+    };
+  },
+
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
     mapRef.current = mapInstance(mapContainerRef);
-
-    mapRef.current.on("load", () => {
-      mapRef.current.on("click", (e) => {
-        const features = mapRef.current.queryRenderedFeatures(e.point, {
-          layers: ["points-layer"],
-        });
-        if (features.length > 0) {
-          const coordinates = features[0].geometry.coordinates.slice();
-          this.mapFlyTo(mapRef, coordinates);
-        }
-      });
-    });
 
     mapRef.current.on("move", () => {
       setLng(mapRef.current.getCenter().lng.toFixed(4));
@@ -24,14 +63,14 @@ export const mapServices = {
     });
   },
 
-  mapLoadImage(mapRef, image) {
+  mapLoadImage(mapRef, image, name) {
     mapRef.current.loadImage(
       `data:image/svg;base64,${image}`,
       function (error, img) {
         if (error) {
           throw error;
         }
-        mapRef.current.addImage("custom-icon", img);
+        mapRef.current.addImage(name, img);
       }
     );
   },
@@ -54,12 +93,7 @@ export const mapServices = {
   },
 
   setMapLayer(mapRef, geojsonData) {
-    if (mapRef.current.getLayer("points-layer")) {
-      mapRef.current.removeLayer("points-layer");
-    }
-    if (mapRef.current.getSource("points-source")) {
-      mapRef.current.removeSource("points-source");
-    }
+    this.mapRemoveLayersAndSources(mapRef);
 
     mapRef.current.addSource("points-source", {
       type: "geojson",
@@ -72,7 +106,8 @@ export const mapServices = {
       source: "points-source",
       layout: {
         "icon-image": "custom-icon",
-        "icon-size": 0.05,
+        "icon-size": 1,
+        "icon-offset": [0, -10],
         "icon-allow-overlap": true,
         "symbol-spacing": 50,
       },
@@ -90,5 +125,26 @@ export const mapServices = {
       essential: true,
       padding: { right: window.innerWidth / 4 },
     });
+  },
+
+  mapRemoveLayersAndSources(mapRef) {
+    if (!mapRef.current || !mapRef.current.isStyleLoaded()) return;
+
+    const layers = mapRef.current.getStyle().layers;
+    if (layers) {
+      for (let i = layers.length - 1; i >= 0; i--) {
+        const layer = layers[i];
+        if (mapRef.current.getLayer(layer.id)) {
+          mapRef.current.removeLayer(layer.id);
+        }
+      }
+    }
+
+    const sources = mapRef.current.getStyle().sources;
+    for (const sourceId in sources) {
+      if (mapRef.current.getSource(sourceId)) {
+        mapRef.current.removeSource(sourceId);
+      }
+    }
   },
 };

@@ -15,7 +15,6 @@ export const fetchRoutingData = async (
       type,
     })
     .then((res) => {
-      console.log(res?.data);
       return res?.data;
     })
     .catch((err) => {

@@ -9,7 +9,7 @@ import ClockIcon from "../../assets/Clock.svg";
 import WWWIcon from "../../assets/WWW.svg";
 import StarIcon from "../../assets/Star.svg";
 import StarFillIcon from "../../assets/StarFill.svg";
-import { fetchRoutingData } from "../../service";
+import { fetchRoutingData, mapServices } from "../../service";
 import { mapContext } from "../../context";
 
 const StarRater = () => {
@@ -36,7 +36,7 @@ const StarRater = () => {
 
 export const PublicInformations = (props) => {
   const { region, neighbourhood, address, location } = props;
-  const { lat, lng } = useContext(mapContext);
+  const { lat, lng, map } = useContext(mapContext);
   const buttons = [
     {
       title: "مسیریابی",
@@ -50,7 +50,7 @@ export const PublicInformations = (props) => {
           location?.y,
           location?.x
         );
-        console.log(result, "this is result if routing api");
+        mapServices.addPolyline(map, result.routes[0].overview_polyline.points);
       },
     },
     {
