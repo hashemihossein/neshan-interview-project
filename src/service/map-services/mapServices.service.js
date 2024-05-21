@@ -22,6 +22,25 @@ export const mapServices = {
       data: geojson,
     });
 
+    mapRef.current.addSource("route-border", {
+      type: "geojson",
+      data: geojson,
+    });
+
+    mapRef.current.addLayer({
+      id: "route-border",
+      type: "line",
+      source: "route-border",
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "#000000",
+        "line-width": 10,
+      },
+    });
+
     mapRef.current.addLayer({
       id: "route",
       type: "line",
