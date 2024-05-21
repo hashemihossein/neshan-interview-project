@@ -25,7 +25,7 @@ export const StarRate = () => {
     <div className={styles.rateContainer}>
       <span className={styles.text}>{toPersianNumber(rate)}</span>
 
-      <div>
+      <div className={styles.starsContainer}>
         {[...Array(5)].map((star, index) => (
           <span key={index}>
             {index < rate ? (

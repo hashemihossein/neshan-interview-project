@@ -23,11 +23,23 @@ export const ItemDetail = (props) => {
     {
       id: 0,
       title: "اطلاعات عمومی",
-      renderComponent: () => <PublicInformations />,
+      renderComponent: (props) => <PublicInformations {...props} />,
     },
-    { id: 1, title: "نظرات", renderComponent: () => <Comments /> },
-    { id: 2, title: "تصاویر", renderComponent: () => <Images /> },
-    { id: 3, title: "درباره", renderComponent: () => <About /> },
+    {
+      id: 1,
+      title: "نظرات",
+      renderComponent: (props) => <Comments {...props} />,
+    },
+    {
+      id: 2,
+      title: "تصاویر",
+      renderComponent: (props) => <Images {...props} />,
+    },
+    {
+      id: 3,
+      title: "درباره",
+      renderComponent: (props) => <About {...props} />,
+    },
   ];
 
   useEffect(() => {
@@ -50,7 +62,7 @@ export const ItemDetail = (props) => {
     ) : (
       infoTabs
         .filter((target) => target?.id === selectedTab)[0]
-        .renderComponent()
+        .renderComponent(item)
     );
   };
 
@@ -114,7 +126,7 @@ export const ItemDetail = (props) => {
             {infoTabs.map((item) => {
               const isSelected = selectedTab === item?.id;
               return (
-                <li>
+                <li key={item?.id}>
                   <button
                     onClick={() => {
                       setSelectedTab(item?.id);
