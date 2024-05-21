@@ -3,9 +3,16 @@ import { mapInstance } from "../../instances";
 import polyline from "@mapbox/polyline";
 
 export const mapServices = {
+  popups: [],
+
   addPolyline(mapRef, polylineString) {
     const coordinates = polyline.decode(polylineString);
     const geojsonCoordinates = coordinates.map((coord) => [coord[1], coord[0]]);
+
+    this.popups.forEach((popup) => {
+      popup.remove();
+    });
+    this.popups = [];
 
     const geojson = {
       type: "Feature",
@@ -111,6 +118,18 @@ export const mapServices = {
     }
     console.log(bounds, "D:D:D:D");
     mapRef.current.fitBounds(bounds, { padding: 100 });
+
+    const middleIndex = Math.floor(coordinates.length / 2);
+    const middlePoint = coordinates[middleIndex];
+
+    const popup = new nmp_mapboxgl.Popup({ offset: 25, closeButton: false })
+      .setLngLat([middlePoint[1], middlePoint[0]])
+      .setHTML(
+        "<h3>Middle Point</h3><p>This is the middle point of the polyline.</p>"
+      )
+      .addTo(mapRef.current);
+
+    this.popups.push(popup);
   },
 
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
