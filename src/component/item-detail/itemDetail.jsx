@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import * as styles from "./itemDetail.module.css";
 import { StarRate } from "..";
+import {
+  PublicInformations,
+  Comments,
+  Images,
+  About,
+} from "./itemDetailInfoTabsRenderComponents.jsx";
 import DefaultItemImage from "./../../assets/DefaultItemImage.svg";
 import AddImageIcon from "./../../assets/AddImage.svg";
 import ChevronRightIcon from "./../../assets/ChevronRight.svg";
@@ -14,10 +20,14 @@ export const ItemDetail = (props) => {
 
   const { setUnmount, item, index } = props;
   const infoTabs = [
-    { id: 0, title: "اطلاعات عمومی", renderComponent: () => {} },
-    { id: 1, title: "نظرات", renderComponent: () => {} },
-    { id: 2, title: "تصاویر", renderComponent: () => {} },
-    { id: 3, title: "درباره", renderComponent: () => {} },
+    {
+      id: 0,
+      title: "اطلاعات عمومی",
+      renderComponent: () => <PublicInformations />,
+    },
+    { id: 1, title: "نظرات", renderComponent: () => <Comments /> },
+    { id: 2, title: "تصاویر", renderComponent: () => <Images /> },
+    { id: 3, title: "درباره", renderComponent: () => <About /> },
   ];
 
   useEffect(() => {
@@ -32,6 +42,17 @@ export const ItemDetail = (props) => {
       }, 500);
     }
   }, [stillMounted]);
+
+  const DynamicTabContentRenderer = () => {
+    return infoTabs.filter((target) => target?.id === selectedTab).length !==
+      1 ? (
+      <div>خطایی رخ داده است!</div>
+    ) : (
+      infoTabs
+        .filter((target) => target?.id === selectedTab)[0]
+        .renderComponent()
+    );
+  };
 
   return (
     <>
@@ -120,6 +141,9 @@ export const ItemDetail = (props) => {
           </div>
         </ul>
         <div className={styles.hr} />
+        <div style={{ padding: "20px" }}>
+          <DynamicTabContentRenderer />
+        </div>
       </div>
     </>
   );
