@@ -5,7 +5,7 @@ import polyline from "@mapbox/polyline";
 export const mapServices = {
   popups: [],
 
-  addPolyline(mapRef, polylineString) {
+  addPolyline(mapRef, polylineString, distance, duration) {
     const coordinates = polyline.decode(polylineString);
     const geojsonCoordinates = coordinates.map((coord) => [coord[1], coord[0]]);
 
@@ -122,11 +122,9 @@ export const mapServices = {
     const middleIndex = Math.floor(coordinates.length / 2);
     const middlePoint = coordinates[middleIndex];
 
-    const popup = new nmp_mapboxgl.Popup({ offset: 25, closeButton: false })
+    const popup = new nmp_mapboxgl.Popup({ offset: 15, closeButton: false })
       .setLngLat([middlePoint[1], middlePoint[0]])
-      .setHTML(
-        "<h3>Middle Point</h3><p>This is the middle point of the polyline.</p>"
-      )
+      .setHTML(`<p>${duration}</p><p>${distance}</p>`)
       .addTo(mapRef.current);
 
     this.popups.push(popup);
@@ -134,7 +132,6 @@ export const mapServices = {
 
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
     mapRef.current = mapInstance(mapContainerRef);
-
     mapRef.current.on("move", () => {
       setLng(mapRef.current.getCenter().lng.toFixed(4));
       setLat(mapRef.current.getCenter().lat.toFixed(4));

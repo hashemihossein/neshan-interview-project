@@ -24,6 +24,27 @@ ul {
   list-style-type: none;
 }
 
+.mapboxgl-popup-content {
+  position: relative;
+  background: #8a1ef7ad;
+  border: 3px #8a1ef7 solid;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  pointer-events: auto;
+}
+.mapboxgl-popup-content p {
+  font-size: 12px; /* Set the font size of the content */
+  line-height: 1; /* Set the line height */ /* Set the text color */
+  color: white;
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-bottom-color: #8a1ef7; /* Set the tip color */
+  border-top-color: #8a1ef7; /* Set the tip color */
+}
+
 @font-face {
   font-family: "Vazir";
   src:

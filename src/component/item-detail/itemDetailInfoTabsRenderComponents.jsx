@@ -50,7 +50,12 @@ export const PublicInformations = (props) => {
           location?.y,
           location?.x
         );
-        mapServices.addPolyline(map, result.routes[0].overview_polyline.points);
+        mapServices.addPolyline(
+          map,
+          result.routes[0].overview_polyline.points,
+          result.routes[0].legs[0].distance.text,
+          result.routes[0].legs[0].duration.text
+        );
       },
     },
     {
