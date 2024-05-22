@@ -27,7 +27,7 @@ ul {
 .mapboxgl-popup-content {
   position: relative;
   background: #8a1ef7ad;
-  border: 3px #8a1ef7 solid;
+  border: 2px #8a1ef7 solid;
   border-radius: 10px;
   padding-left: 5px;
   padding-right: 5px;

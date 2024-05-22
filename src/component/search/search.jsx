@@ -10,9 +10,9 @@ import {
   useSearchCoordinatesDebounce,
   useSearchTextDebounce,
 } from "../../hooks";
-import { fetchSearchData } from "../../service";
+import { fetchSearchData, searchHistoryServices } from "../../service";
 import { mapContext } from "../../context";
-import { SearchListRender } from "..";
+import { SearchContentRender } from "..";
 import { restClient } from "./../../instances";
 import { searchContext } from "../../context";
 import HamburgerIcon from "./../../assets/Hamburger.svg";
@@ -79,7 +79,10 @@ export const Search = () => {
           />
           <button
             className={styles.iconButton}
-            onClick={() => searchTextInput.current.blur()}
+            onClick={() => {
+              searchHistoryServices.add(searchedText);
+              searchTextInput.current.blur();
+            }}
           >
             <img width="20px" height="20px" src={SearchIcon} />
           </button>
@@ -103,7 +106,7 @@ export const Search = () => {
       >
         <div className={styles.expandedView}>
           <div className={styles.topPadding}></div>
-          <SearchListRender
+          <SearchContentRender
             data={searchResult}
             loading={apiLoading || debounceSearchTextLoading}
             emptySearchText={searchedText == ""}

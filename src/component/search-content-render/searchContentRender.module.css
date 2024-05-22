@@ -1,0 +1,56 @@
+.container {
+  width: 100%;
+  margin-top: 10px;
+  overflow: auto;
+  height: 150vh;
+}
+
+.spinnerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: "Vazir";
+}
+
+.notFoundContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: "Vazir";
+}
+
+.searchHistoryContainer {
+  padding: 20px;
+}
+
+.searchHistoryText {
+  margin-bottom: 30px;
+}
+
+.searchHistoryItemContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.searchHistoryItemContainer span {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.searchHistoryItemContainer button {
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+ul {
+  padding-inline-start: 0px;
+  padding: 20px;
+}

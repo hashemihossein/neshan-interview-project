@@ -1,15 +1,43 @@
 import React from "react";
-import * as styles from "./searchListRender.module.css";
+import * as styles from "./searchContentRender.module.css";
 import SpinnerSvg from "../../assets/SpinnerSvg.svg";
+import CrossIcon from "../../assets/Cross.svg";
 import { SearchListItem } from "..";
+import { searchHistoryServices } from "../../service";
 
-export const SearchListRender = (props) => {
+export const SearchContentRender = (props) => {
   const { data, loading, emptySearchText } = props;
+  const searchHistory = searchHistoryServices.get();
+
   const conditionRendering = [
     {
       value: emptySearchText,
       RenderComponent: () => {
-        return <div className={styles.spinnerContainer}>لطفا بنویس</div>;
+        return (
+          <div className={styles.searchHistoryContainer}>
+            {searchHistory.length === 0 ? (
+              <span>تاریخچه جستجوی شما در اینجا نمایش داده خواهد شد</span>
+            ) : (
+              <>
+                <div className={styles.searchHistoryText}>تاریخچه جستجو</div>
+
+                {searchHistory.map((searchItem, index) => {
+                  return (
+                    <div
+                      key={`${searchItem}--${index}`}
+                      className={styles.searchHistoryItemContainer}
+                    >
+                      <span>{searchItem}</span>
+                      <button>
+                        <img width="20px" height="20px" src={CrossIcon} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        );
       },
     },
     {
