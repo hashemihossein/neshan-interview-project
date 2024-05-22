@@ -5,19 +5,22 @@ export const searchHistoryServices = {
       ? JSON.parse(localSearchHistoryString)
       : [];
     const reversedLocalSearchHistory = localSearchHistoryArray.reverse();
-    reversedLocalSearchHistory.push(searchText);
-
-    console.log(reversedLocalSearchHistory.reverse());
+    if (
+      searchText !==
+      reversedLocalSearchHistory[reversedLocalSearchHistory.length - 1]
+    ) {
+      reversedLocalSearchHistory.push(searchText);
+    }
+    if (reversedLocalSearchHistory.length > 10) {
+      reversedLocalSearchHistory.shift();
+    }
     localStorage.setItem(
       "search-history",
       JSON.stringify(reversedLocalSearchHistory.reverse())
     );
-
-    console.log(localStorage.getItem("search-history"));
   },
   get: () => {
     const searchHistory = localStorage.getItem("search-history");
     return searchHistory ? JSON.parse(searchHistory) : [];
   },
-  remove: (searchText, index) => {},
 };

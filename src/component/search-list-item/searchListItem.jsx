@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import * as styles from "./searchListItem.module.css";
 import RoutingIcon from "./../../assets/Routing.svg";
 import { ItemDetail, StarRate } from "..";
-import { mapServices } from "../../service";
-import { mapContext } from "../../context";
+import { mapServices, searchHistoryServices } from "../../service";
+import { mapContext, searchContext } from "../../context";
 
 export const SearchListItem = (props) => {
   const { map } = useContext(mapContext);
+  const { searchedText } = useContext(searchContext);
   const [detailPageExpanded, setDetailPageExpanded] = useState(false);
 
   const { item, index } = props;
@@ -16,6 +17,7 @@ export const SearchListItem = (props) => {
       <div className={styles.rowContainer}>
         <button
           onClick={() => {
+            searchHistoryServices.add(searchedText);
             mapServices.mapFlyTo(map, [item?.location?.x, item?.location?.y]);
             setDetailPageExpanded(true);
           }}

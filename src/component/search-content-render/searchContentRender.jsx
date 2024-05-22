@@ -1,35 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as styles from "./searchContentRender.module.css";
 import SpinnerSvg from "../../assets/SpinnerSvg.svg";
-import CrossIcon from "../../assets/Cross.svg";
+import SearchIcon from "../../assets/Search.svg";
 import { SearchListItem } from "..";
 import { searchHistoryServices } from "../../service";
+import { searchContext } from "../../context";
 
 export const SearchContentRender = (props) => {
   const { data, loading, emptySearchText } = props;
-  const searchHistory = searchHistoryServices.get();
-
+  const { setSearchedText } = useContext(searchContext);
   const conditionRendering = [
     {
       value: emptySearchText,
       RenderComponent: () => {
+        const searchHistory = searchHistoryServices.get();
+
         return (
           <div className={styles.searchHistoryContainer}>
             {searchHistory.length === 0 ? (
-              <span>تاریخچه جستجوی شما در اینجا نمایش داده خواهد شد</span>
+              <div style={{ textAlign: "center", fontSize: "14px" }}>
+                تاریخچه جستجوی شما در اینجا نمایش داده خواهد شد
+              </div>
             ) : (
               <>
                 <div className={styles.searchHistoryText}>تاریخچه جستجو</div>
 
                 {searchHistory.map((searchItem, index) => {
                   return (
-                    <div
-                      key={`${searchItem}--${index}`}
-                      className={styles.searchHistoryItemContainer}
-                    >
-                      <span>{searchItem}</span>
-                      <button>
-                        <img width="20px" height="20px" src={CrossIcon} />
+                    <div key={`${searchItem}--${index}`}>
+                      <button
+                        onClick={() => {
+                          setSearchedText(searchItem);
+                        }}
+                        className={styles.searchHistoryItemButton}
+                      >
+                        <span>{searchItem}</span>
+                        <img width="20px" height="20px" src={SearchIcon} />
                       </button>
                     </div>
                   );
