@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import * as styles from "./itemDetail.module.css";
 import { StarRate } from "..";
 import {
@@ -12,8 +12,13 @@ import AddImageIcon from "./../../assets/AddImage.svg";
 import ChevronRightIcon from "./../../assets/ChevronRight.svg";
 import CategoryIcon from "./../../assets/Category.svg";
 import CarIcon from "./../../assets/Car.svg";
+import { convertToGeoJSON } from "../../utils/convert-to-geo-json/convertToGeoJson.utils";
+import { mapServices } from "../../service";
+import { searchContext, mapContext } from "../../context";
 
 export const ItemDetail = (props) => {
+  const { map } = useContext(mapContext);
+  const { searchResult } = useContext(searchContext);
   const [isMounted, setIsMounted] = useState(false);
   const [stillMounted, setStillMounted] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -69,7 +74,11 @@ export const ItemDetail = (props) => {
   return (
     <>
       <button
-        onClick={() => setStillMounted(false)}
+        onClick={() => {
+          const geojsonData = convertToGeoJSON(searchResult?.items);
+          mapServices.setMapLayer(map, geojsonData);
+          setStillMounted(false);
+        }}
         className={`${styles.closeButton} 
           ${
             isMounted && stillMounted

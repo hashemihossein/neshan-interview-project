@@ -5,6 +5,15 @@ import polyline from "@mapbox/polyline";
 export const mapServices = {
   popups: [],
 
+  setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
+    mapRef.current = mapInstance(mapContainerRef);
+    mapRef.current.on("move", () => {
+      setLng(mapRef.current.getCenter().lng.toFixed(4));
+      setLat(mapRef.current.getCenter().lat.toFixed(4));
+      setZoom(mapRef.current.getZoom().toFixed(2));
+    });
+  },
+
   addPolyline(mapRef, polylineString, distance, duration) {
     const coordinates = polyline.decode(polylineString);
     const geojsonCoordinates = coordinates.map((coord) => [coord[1], coord[0]]);
@@ -130,15 +139,6 @@ export const mapServices = {
     this.popups.push(popup);
   },
 
-  setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
-    mapRef.current = mapInstance(mapContainerRef);
-    mapRef.current.on("move", () => {
-      setLng(mapRef.current.getCenter().lng.toFixed(4));
-      setLat(mapRef.current.getCenter().lat.toFixed(4));
-      setZoom(mapRef.current.getZoom().toFixed(2));
-    });
-  },
-
   mapLoadImage(mapRef, image, name) {
     mapRef.current.loadImage(
       `data:image/svg;base64,${image}`,
@@ -151,8 +151,27 @@ export const mapServices = {
     );
   },
 
+  mapSignleFitBound(mapRef, lng, lat) {
+    if (mapRef.current) {
+      const bounds = [
+        [lng, lat],
+        [lng, lat],
+      ];
+      mapRef.current.fitBounds(bounds, {
+        padding: {
+          right: window.innerWidth / 4 + 50,
+          left: 50,
+          top: 50,
+          bottom: 50,
+        },
+        maxZoom: 15,
+      });
+    }
+  },
+
   mapFitBounds(mapRef, geojsonData) {
     let bounds = new nmp_mapboxgl.LngLatBounds();
+    console.log(geojsonData, "D:D:D:");
 
     geojsonData.features.forEach((feature) => {
       bounds.extend(feature.geometry.coordinates);
@@ -160,10 +179,10 @@ export const mapServices = {
 
     mapRef.current.fitBounds(bounds, {
       padding: {
-        right: 30,
-        left: 30,
-        top: 30,
-        bottom: 30,
+        right: window.innerWidth / 4 + 50,
+        left: 50,
+        top: 50,
+        bottom: 50,
       },
     });
   },
@@ -188,19 +207,10 @@ export const mapServices = {
         "symbol-spacing": 50,
       },
       minzoom: 2,
-      maxzoom: 21,
+      maxzoom: 22,
     });
 
     this.mapFitBounds(mapRef, geojsonData);
-  },
-
-  mapFlyTo(mapRef, coordinates, zoom = 15) {
-    mapRef.current.flyTo({
-      center: coordinates,
-      zoom: zoom,
-      essential: true,
-      padding: { right: window.innerWidth / 4 },
-    });
   },
 
   mapRemoveLayersAndSources(mapRef) {

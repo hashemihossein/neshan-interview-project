@@ -1,7 +1,7 @@
-export const convertToGeoJSON = (apiData) => {
+export const convertToGeoJSON = (data) => {
   return {
     type: "FeatureCollection",
-    features: apiData.map((item) => ({
+    features: data.map((item) => ({
       type: "Feature",
       geometry: {
         type: "Point",

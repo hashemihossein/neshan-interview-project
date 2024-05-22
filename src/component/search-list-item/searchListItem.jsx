@@ -18,7 +18,11 @@ export const SearchListItem = (props) => {
         <button
           onClick={() => {
             searchHistoryServices.add(searchedText);
-            mapServices.mapFlyTo(map, [item?.location?.x, item?.location?.y]);
+            mapServices.mapSignleFitBound(
+              map,
+              item?.location?.x,
+              item?.location?.y
+            );
             setDetailPageExpanded(true);
           }}
           className={styles.containerButton}
