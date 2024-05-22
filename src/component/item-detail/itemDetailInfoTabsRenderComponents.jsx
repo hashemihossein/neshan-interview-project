@@ -36,30 +36,37 @@ const StarRater = () => {
 
 export const PublicInformations = (props) => {
   const { region, neighbourhood, address, location } = props;
-  const { lat, lng, map } = useContext(mapContext);
+  const { map } = useContext(mapContext);
   const { addToast } = useContext(toastContext);
   const buttons = [
     {
       title: "مسیریابی",
       iconSrc: RoutingIcon,
       isPrimary: true,
-      clickHandler: async () => {
-        try {
-          const result = await fetchRoutingData(
-            lat,
-            lng,
-            location?.y,
-            location?.x
-          );
-          mapServices.addPolyline(
-            map,
-            result.routes[0].overview_polyline.points,
-            result.routes[0].legs[0].distance.text,
-            result.routes[0].legs[0].duration.text
-          );
-        } catch (error) {
-          addToast("خطا در ارتباط با سرور", "error");
-        }
+      clickHandler: () => {
+        mapServices.mapRemoveLayersAndSources(map);
+        addToast("لطفا مبدا خود را با کلیک روی نقشه مشخص کنید");
+        map.current.on("click", async (e) => {
+          const { lng, lat } = e.lngLat;
+          console.log(" this is lng lat ");
+          try {
+            const result = await fetchRoutingData(
+              lat,
+              lng,
+              location?.y,
+              location?.x
+            );
+            mapServices.addPolyline(
+              map,
+              result.routes[0].overview_polyline.points,
+              result.routes[0].legs[0].distance.text,
+              result.routes[0].legs[0].duration.text
+            );
+          } catch (error) {
+            addToast("خطا در ارتباط با سرور", "error");
+          }
+          map.current.off("click");
+        });
       },
     },
     {

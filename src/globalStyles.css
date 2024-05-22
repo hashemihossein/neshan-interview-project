@@ -58,13 +58,13 @@ ul {
   display: flex;
   justify-content: end;
   align-items: center;
+  text-align: right;
   border: 2px solid #1976d2;
   background-color: #fff;
   color: black;
   padding: 10px;
   margin: 8px 0;
   white-space: pre-wrap;
-
   border-radius: 15px;
   box-shadow: 0px 0px 10px 5px rgb(190, 190, 190);
   opacity: 0;

@@ -1,5 +1,5 @@
 import React from "react";
-import { restClient } from "../../instances";
+import { restClient } from "../../config-instances";
 
 export const fetchSearchData = async (lat, lng, searchValue) => {
   const result = restClient

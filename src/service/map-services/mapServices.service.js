@@ -1,5 +1,5 @@
 import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
-import { mapInstance } from "../../instances";
+import { mapInstance } from "../../config-instances";
 import polyline from "@mapbox/polyline";
 
 export const mapServices = {

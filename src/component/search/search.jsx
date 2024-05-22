@@ -13,7 +13,6 @@ import {
 import { fetchSearchData, searchHistoryServices } from "../../service";
 import { mapContext, toastContext } from "../../context";
 import { SearchContentRender } from "..";
-import { restClient } from "./../../instances";
 import { searchContext } from "../../context";
 import HamburgerIcon from "./../../assets/Hamburger.svg";
 import SearchIcon from "./../../assets/Search.svg";

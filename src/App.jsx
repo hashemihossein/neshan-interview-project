@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 
 import * as styles from "./App.module.css";
-import { restClient } from "./instances";
 import { Search } from "./component";
 import { mapContext, searchContext, toastContext } from "./context";
 import { convertToGeoJSON } from "./utils";
