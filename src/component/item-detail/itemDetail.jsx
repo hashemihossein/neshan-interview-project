@@ -61,14 +61,9 @@ export const ItemDetail = (props) => {
   }, [stillMounted]);
 
   const DynamicTabContentRenderer = () => {
-    return infoTabs.filter((target) => target?.id === selectedTab).length !==
-      1 ? (
-      <div>خطایی رخ داده است!</div>
-    ) : (
-      infoTabs
-        .filter((target) => target?.id === selectedTab)[0]
-        .renderComponent(item)
-    );
+    return infoTabs
+      .filter((target) => target?.id === selectedTab)[0]
+      .renderComponent(item);
   };
 
   return (

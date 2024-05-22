@@ -10,7 +10,7 @@ export const SearchListItem = (props) => {
   const { searchedText } = useContext(searchContext);
   const [detailPageExpanded, setDetailPageExpanded] = useState(false);
 
-  const { item, index } = props;
+  const { item } = props;
 
   return (
     <li className={styles.container}>
@@ -42,7 +42,6 @@ export const SearchListItem = (props) => {
         <ItemDetail
           setUnmount={() => setDetailPageExpanded(false)}
           item={item}
-          index={index}
         />
       )}
     </li>

@@ -1,6 +1,6 @@
 import nmp_mapboxgl from "@neshan-maps-platform/mapbox-gl";
 import "@neshan-maps-platform/mapbox-gl/dist/NeshanMapboxGl.css";
-import { mapboxConfig } from "../../config/mapbox-config/mapbox.config";
+import { mapboxConfig } from "../../config";
 
 export const mapInstance = (ref) => {
   const map = new nmp_mapboxgl.Map(

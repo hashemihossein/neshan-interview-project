@@ -4,6 +4,7 @@ import polyline from "@mapbox/polyline";
 
 export const mapServices = {
   popups: [],
+  marker: null,
 
   setInitialMap(mapRef, mapContainerRef, setLng, setLat, setZoom) {
     mapRef.current = mapInstance(mapContainerRef);
@@ -12,16 +13,37 @@ export const mapServices = {
       setLat(mapRef.current.getCenter().lat.toFixed(4));
       setZoom(mapRef.current.getZoom().toFixed(2));
     });
+    // this.userLocationRequest(mapRef);
+  },
+
+  userLocationRequest(mapRef, userMarkerRef) {
+    if ("geolocation" in navigator) {
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const { longitude, latitude } = position.coords;
+
+          const pulsingCircle = document.createElement("div");
+          pulsingCircle.className = "pulsing-circle";
+          // pulsingCircle.style.animation = "pulse 1s ease-in-out infinite";
+          if (!this.marker) {
+            this.marker = new nmp_mapboxgl.Marker({
+              element: pulsingCircle, // Custom element for pulsing circle
+              anchor: "bottom", // Anchor position of the custom element
+            })
+              .setLngLat([longitude, latitude])
+              .addTo(mapRef.current);
+          }
+
+          this.mapSignleFitBound(mapRef, longitude, latitude);
+        },
+        (error) => {}
+      );
+    }
   },
 
   addPolyline(mapRef, polylineString, distance, duration) {
     const coordinates = polyline.decode(polylineString);
     const geojsonCoordinates = coordinates.map((coord) => [coord[1], coord[0]]);
-
-    this.popups.forEach((popup) => {
-      popup.remove();
-    });
-    this.popups = [];
 
     const geojson = {
       type: "Feature",
@@ -30,7 +52,6 @@ export const mapServices = {
         coordinates: geojsonCoordinates,
       },
     };
-    console.log(geojson, "this is geoJson");
     this.mapRemoveLayersAndSources(mapRef);
 
     mapRef.current.addSource("route", {
@@ -125,8 +146,14 @@ export const mapServices = {
     for (let i = 0; i < geojsonCoordinates.length; i++) {
       bounds.extend(geojsonCoordinates[i]);
     }
-    console.log(bounds, "D:D:D:D");
-    mapRef.current.fitBounds(bounds, { padding: 100 });
+    mapRef.current.fitBounds(bounds, {
+      padding: {
+        right: window.innerWidth / 4 + 50,
+        left: 50,
+        top: 50,
+        bottom: 50,
+      },
+    });
 
     const middleIndex = Math.floor(coordinates.length / 2);
     const middlePoint = coordinates[middleIndex];
@@ -171,7 +198,6 @@ export const mapServices = {
 
   mapFitBounds(mapRef, geojsonData) {
     let bounds = new nmp_mapboxgl.LngLatBounds();
-    console.log(geojsonData, "D:D:D:");
 
     geojsonData.features.forEach((feature) => {
       bounds.extend(feature.geometry.coordinates);
@@ -187,8 +213,8 @@ export const mapServices = {
     });
   },
 
-  setMapLayer(mapRef, geojsonData) {
-    this.mapRemoveLayersAndSources(mapRef);
+  async setMapLayer(mapRef, geojsonData) {
+    await this.mapRemoveLayersAndSources(mapRef);
 
     mapRef.current.addSource("points-source", {
       type: "geojson",
@@ -213,7 +239,7 @@ export const mapServices = {
     this.mapFitBounds(mapRef, geojsonData);
   },
 
-  mapRemoveLayersAndSources(mapRef) {
+  async mapRemoveLayersAndSources(mapRef) {
     if (!mapRef.current || !mapRef.current.isStyleLoaded()) return;
 
     const layers = mapRef.current.getStyle().layers;
@@ -232,5 +258,11 @@ export const mapServices = {
         mapRef.current.removeSource(sourceId);
       }
     }
+
+    this.popups.forEach((popup) => {
+      popup.remove();
+    });
+    this.popups = [];
+    console.log("3");
   },
 };

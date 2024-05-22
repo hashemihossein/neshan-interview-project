@@ -10,7 +10,7 @@ import WWWIcon from "../../assets/WWW.svg";
 import StarIcon from "../../assets/Star.svg";
 import StarFillIcon from "../../assets/StarFill.svg";
 import { fetchRoutingData, mapServices } from "../../service";
-import { mapContext } from "../../context";
+import { mapContext, toastContext } from "../../context";
 
 const StarRater = () => {
   const [mouseEnterIndex, setMouseEnterIndex] = useState(-1);
@@ -37,25 +37,29 @@ const StarRater = () => {
 export const PublicInformations = (props) => {
   const { region, neighbourhood, address, location } = props;
   const { lat, lng, map } = useContext(mapContext);
+  const { addToast } = useContext(toastContext);
   const buttons = [
     {
       title: "مسیریابی",
       iconSrc: RoutingIcon,
       isPrimary: true,
       clickHandler: async () => {
-        console.log("hey :LD:D");
-        const result = await fetchRoutingData(
-          lat,
-          lng,
-          location?.y,
-          location?.x
-        );
-        mapServices.addPolyline(
-          map,
-          result.routes[0].overview_polyline.points,
-          result.routes[0].legs[0].distance.text,
-          result.routes[0].legs[0].duration.text
-        );
+        try {
+          const result = await fetchRoutingData(
+            lat,
+            lng,
+            location?.y,
+            location?.x
+          );
+          mapServices.addPolyline(
+            map,
+            result.routes[0].overview_polyline.points,
+            result.routes[0].legs[0].distance.text,
+            result.routes[0].legs[0].duration.text
+          );
+        } catch (error) {
+          addToast("خطا در ارتباط با سرور", "error");
+        }
       },
     },
     {

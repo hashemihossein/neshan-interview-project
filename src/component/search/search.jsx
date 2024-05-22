@@ -11,7 +11,7 @@ import {
   useSearchTextDebounce,
 } from "../../hooks";
 import { fetchSearchData, searchHistoryServices } from "../../service";
-import { mapContext } from "../../context";
+import { mapContext, toastContext } from "../../context";
 import { SearchContentRender } from "..";
 import { restClient } from "./../../instances";
 import { searchContext } from "../../context";
@@ -23,6 +23,7 @@ export const Search = () => {
   const [expanded, setExpanded] = useState(false);
   const searchTextInput = useRef(null);
   const { lat, lng } = useContext(mapContext);
+  const { addToast } = useContext(toastContext);
   const {
     searchResult,
     setSearchResult,
@@ -38,8 +39,14 @@ export const Search = () => {
   const searchData = useCallback(
     async (searchValue) => {
       setApiLoading(true);
-      const result = await fetchSearchData(lat, lng, searchValue);
-      setSearchResult(result);
+      try {
+        const result = await fetchSearchData(lat, lng, searchValue);
+        setSearchResult(result);
+      } catch (error) {
+        addToast("خطا در ارتباط با سرور", "error");
+        setSearchResult([]);
+      }
+
       setApiLoading(false);
     },
     [debouncedSearchTextValue]

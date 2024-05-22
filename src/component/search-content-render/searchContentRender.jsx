@@ -72,7 +72,6 @@ export const SearchContentRender = (props) => {
                 <SearchListItem
                   key={String(item.location.x + item.location.y)}
                   item={item}
-                  index={index}
                 />
               );
             })}
