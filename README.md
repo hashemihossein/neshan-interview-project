@@ -13,7 +13,7 @@ I managed my own packages in this project using PNPM, and I kindly ask you to us
 
 ```bash
   # Clone the repository
-  https://github.com/
+  git clone https://github.com/hashemihossein/neshan-interview-project
 
   # Navigate to the project directory
   cd neshan-interview-project
