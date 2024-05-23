@@ -38,6 +38,22 @@ export const PublicInformations = (props) => {
   const { region, neighbourhood, address, location } = props;
   const { map } = useContext(mapContext);
   const { addToast } = useContext(toastContext);
+
+  const mapClickListenerFunction = async (e) => {
+    const { lng, lat } = e.lngLat;
+    map.current.off("click", mapClickListenerFunction);
+    try {
+      const result = await fetchRoutingData(lat, lng, location?.y, location?.x);
+      mapServices.addPolyline(
+        map,
+        result.routes[0].overview_polyline.points,
+        result.routes[0].legs[0].distance.text,
+        result.routes[0].legs[0].duration.text
+      );
+    } catch (error) {
+      addToast("خطا در ارتباط با سرور", "error");
+    }
+  };
   const buttons = [
     {
       title: "مسیریابی",
@@ -46,27 +62,7 @@ export const PublicInformations = (props) => {
       clickHandler: () => {
         mapServices.mapRemoveLayersAndSources(map);
         addToast("لطفا مبدا خود را با کلیک روی نقشه مشخص کنید");
-        map.current.on("click", async (e) => {
-          const { lng, lat } = e.lngLat;
-          console.log(" this is lng lat ");
-          try {
-            const result = await fetchRoutingData(
-              lat,
-              lng,
-              location?.y,
-              location?.x
-            );
-            mapServices.addPolyline(
-              map,
-              result.routes[0].overview_polyline.points,
-              result.routes[0].legs[0].distance.text,
-              result.routes[0].legs[0].duration.text
-            );
-          } catch (error) {
-            addToast("خطا در ارتباط با سرور", "error");
-          }
-          map.current.off("click");
-        });
+        map.current.on("click", mapClickListenerFunction);
       },
     },
     {

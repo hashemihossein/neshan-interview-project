@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 
 import * as styles from "./App.module.css";
-import { Search } from "./component";
+import { Sidebar } from "./component";
 import { mapContext, searchContext, toastContext } from "./context";
 import { convertToGeoJSON } from "./utils";
 import { customIconBase64, originPolylineIcon } from "./constants";
@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     if (map.current) return;
+
     mapServices.setInitialMap(
       map,
       mapContainer,
@@ -27,6 +28,16 @@ function App() {
       setZoom,
       userMarkerRef
     );
+    const geolocateControl = new nmp_mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    });
+    map.current.addControl(geolocateControl, "top-left");
     mapServices.mapLoadImage(map, customIconBase64, "custom-icon");
     mapServices.mapLoadImage(map, originPolylineIcon, "origin-icon");
   });
@@ -43,9 +54,7 @@ function App() {
   return (
     <>
       <div ref={mapContainer} className={styles.mapContainer}>
-        {/* <div className={styles.componentContainer}> */}
-        <Search />
-        {/* </div> */}
+        <Sidebar />
       </div>
     </>
   );

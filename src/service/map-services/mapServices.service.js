@@ -13,32 +13,6 @@ export const mapServices = {
       setLat(mapRef.current.getCenter().lat.toFixed(4));
       setZoom(mapRef.current.getZoom().toFixed(2));
     });
-    // this.userLocationRequest(mapRef);
-  },
-
-  userLocationRequest(mapRef, userMarkerRef) {
-    if ("geolocation" in navigator) {
-      const watchId = navigator.geolocation.watchPosition(
-        (position) => {
-          const { longitude, latitude } = position.coords;
-
-          const pulsingCircle = document.createElement("div");
-          pulsingCircle.className = "pulsing-circle";
-          // pulsingCircle.style.animation = "pulse 1s ease-in-out infinite";
-          if (!this.marker) {
-            this.marker = new nmp_mapboxgl.Marker({
-              element: pulsingCircle, // Custom element for pulsing circle
-              anchor: "bottom", // Anchor position of the custom element
-            })
-              .setLngLat([longitude, latitude])
-              .addTo(mapRef.current);
-          }
-
-          this.mapSignleFitBound(mapRef, longitude, latitude);
-        },
-        (error) => {}
-      );
-    }
   },
 
   addPolyline(mapRef, polylineString, distance, duration) {
@@ -263,6 +237,5 @@ export const mapServices = {
       popup.remove();
     });
     this.popups = [];
-    console.log("3");
   },
 };

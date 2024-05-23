@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import * as styles from "./searchContentRender.module.css";
+import * as styles from "./SidebarContentRender.module.css";
 import SpinnerSvg from "../../assets/SpinnerSvg.svg";
 import SearchIcon from "../../assets/Search.svg";
 import { SearchListItem } from "..";
 import { searchHistoryServices } from "../../service";
 import { searchContext } from "../../context";
 
-export const SearchContentRender = (props) => {
+export const SidebarContentRender = (props) => {
   const { data, loading, emptySearchText } = props;
   const { setSearchedText } = useContext(searchContext);
   const conditionRendering = [

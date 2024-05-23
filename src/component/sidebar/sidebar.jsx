@@ -5,20 +5,20 @@ import React, {
   useContext,
   useRef,
 } from "react";
-import * as styles from "./search.module.css";
+import * as styles from "./sidebar.module.css";
 import {
   useSearchCoordinatesDebounce,
   useSearchTextDebounce,
 } from "../../hooks";
 import { fetchSearchData, searchHistoryServices } from "../../service";
 import { mapContext, toastContext } from "../../context";
-import { SearchContentRender } from "..";
+import { SidebarContentRender } from "..";
 import { searchContext } from "../../context";
 import HamburgerIcon from "./../../assets/Hamburger.svg";
 import SearchIcon from "./../../assets/Search.svg";
 import CrossIcon from "./../../assets/Cross.svg";
 
-export const Search = () => {
+export const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
   const searchTextInput = useRef(null);
   const { lat, lng } = useContext(mapContext);
@@ -112,7 +112,7 @@ export const Search = () => {
       >
         <div className={styles.expandedView}>
           <div className={styles.topPadding}></div>
-          <SearchContentRender
+          <SidebarContentRender
             data={searchResult}
             loading={apiLoading || debounceSearchTextLoading}
             emptySearchText={searchedText == ""}

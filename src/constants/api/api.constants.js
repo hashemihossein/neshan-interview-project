@@ -1,2 +1,2 @@
 export const BASE_URL = "https://api.neshan.org/";
-export const API_KEY = "service.8197b512b50140ec87175f2f7547da7b";
+export const API_KEY = "service.c2bdedd795d94595b2fbd1abc3fbd248";
