@@ -1,6 +1,6 @@
-# neshan-interview-project
+# React-Map
 
-This project has been provided as a practical assessment by the company Neshan. In this project, the user can search for locations based on their current map center position and the text of interest, view the results with pins on the map, and receive brief information about all the results. By clicking on each location, they will be able to view detailed information about that place and route to it from any desired point. I hope you enjoy it.
+In this project, the user can search for locations based on their current map center position and the text of interest, view the results with pins on the map, and receive brief information about all the results. By clicking on each location, they will be able to view detailed information about that place and route to it from any desired point. I hope you enjoy it.
 
 ## Technologies Used
 
